@@ -1,0 +1,29 @@
+.irrigation-grid {
+  display: flex;
+  gap: 20px;
+}
+
+.irrigation-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 220px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+button.on {
+  background: green;
+  color: white;
+}
+
+button.off {
+  background: red;
+  color: white;
+}
+
+.ai-box {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e3f2fd;
+  border-radius: 10px;
+}

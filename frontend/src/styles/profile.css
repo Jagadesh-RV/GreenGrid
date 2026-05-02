@@ -1,0 +1,22 @@
+input {
+  display: block;
+  margin: 5px 0;
+  padding: 6px;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: #0f7b3f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-btn {
+  margin-bottom: 15px;
+}

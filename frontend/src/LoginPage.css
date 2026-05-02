@@ -1,0 +1,122 @@
+body {
+  margin: 0;
+  background: #eef5ee;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+}
+
+.login-container {
+  width: 390px;
+  background: #fff;
+  min-height: 100vh;
+}
+
+/* TOP SECTION */
+.top-section {
+  text-align: center;
+  padding: 30px 20px 10px;
+  background: linear-gradient(#f4faf5, #ffffff);
+}
+
+.logo {
+  font-size: 40px;
+}
+
+h1 {
+  color: #1b5e20;
+  margin: 5px 0;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 14px;
+}
+
+.hero-img {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+/* FORM */
+.form-section {
+  padding: 20px;
+}
+
+.form-section h2 {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.login-text {
+  text-align: center;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+/* INPUT */
+.input-box {
+  display: flex;
+  align-items: center;
+  background: #f1f5f1;
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.input-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  flex: 1;
+  margin-left: 10px;
+}
+
+.forgot {
+  font-size: 12px;
+  color: green;
+}
+
+/* BUTTON */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+/* DIVIDER */
+.divider {
+  text-align: center;
+  margin: 10px 0;
+  color: #999;
+}
+
+/* GOOGLE */
+.google-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+/* SIGNUP */
+.signup {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.signup span {
+  color: green;
+  font-weight: bold;
+}
