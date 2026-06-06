@@ -18,19 +18,18 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/Dashboard" />} />
-        <Route path="/Dashboard" element={<Dashboard />} />
-        <Route path="/Weather" element={<Weather />} />
-        <Route path="/Soil" element={<Soil />} />
-        <Route path="/Irrigation" element={<Irrigation />} />
-        <Route path="/Marketplace" element={<Marketplace />} />
-        <Route path="/Community" element={<Community />} />
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/FieldManagement" element={<FieldManagement />} />
-        <Route path="/Recommendations" element={<Recommendations />} />
-        <Route path="/Crops" element={<CropManagement />} />
+        <Route path="/" element={<Navigate to="/dashboard" />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/weather" element={<Weather />} />
+        <Route path="/soil" element={<Soil />} />
+        <Route path="/irrigation" element={<Irrigation />} />
+        <Route path="/marketplace" element={<Marketplace />} />
+        <Route path="/community" element={<Community />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/fields" element={<FieldManagement />} />
+        <Route path="/recommendations" element={<Recommendations />} />
+        <Route path="/crops" element={<CropManagement />} />
         <Route path="/crop/:id" element={<CropDetails />} />
-        
       </Routes>
     </BrowserRouter>
   );

@@ -1,77 +1,131 @@
-import { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import "../styles/irrigation.css";
-useEffect(() => {
-  axios.get("http://localhost:5000/api/fields")
-    .then(res => setFields(res.data));
-}, []);
+import { FieldContext } from "../context/FieldContext";
+import Layout from "../styles/layout.css";
 
-const toggle = async (field) => {
-  const res = await axios.put(
-    `http://localhost:5000/api/fields/${field._id}`,
-    { status: !field.status }
-  );
-
-  setFields(fields.map(f => f._id === field._id ? res.data : f));
-};
 export default function Irrigation() {
 
-  const [fields, setFields] = useState([
-    { id: 1, name: "Field A", water: 50, status: false },
-    { id: 2, name: "Field B", water: 30, status: true }
-  ]);
+  const { fields } = useContext(FieldContext);
 
+  const [irrigationData, setIrrigationData] = useState([]);
+
+  // ✅ Initialize irrigation state from fields
+  useEffect(() => {
+    const enriched = fields.map(f => ({
+      ...f,
+      target: f.water || 50,
+      progress: f.water || 0,
+      isIrrigating: false
+    }));
+
+    setIrrigationData(enriched);
+  }, [fields]);
+
+  // ✅ Simulation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIrrigationData(prev =>
+        prev.map(field => {
+
+          if (field.isIrrigating && field.progress < field.target) {
+            return {
+              ...field,
+              progress: field.progress + 1
+            };
+          }
+
+          if (field.progress >= field.target && field.isIrrigating) {
+            return { ...field, isIrrigating: false };
+          }
+
+          return field;
+        })
+      );
+    }, 200);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // ✅ Toggle irrigation
   const toggle = (id) => {
-    setFields(fields.map(f =>
-      f.id === id ? { ...f, status: !f.status } : f
-    ));
+    setIrrigationData(prev =>
+      prev.map(f =>
+        f.id === id
+          ? { ...f, isIrrigating: !f.isIrrigating }
+          : f
+      )
+    );
   };
 
-  const changeWater = (id, value) => {
-    setFields(fields.map(f =>
-      f.id === id ? { ...f, water: value } : f
-    ));
+  // ✅ Set target
+  const setTarget = (id, value) => {
+    setIrrigationData(prev =>
+      prev.map(f =>
+        f.id === id
+          ? { ...f, target: Number(value) }
+          : f
+      )
+    );
   };
 
   return (
     <div className="layout">
       <Sidebar />
+
       <div className="main">
         <Navbar />
 
         <h2>💧 Smart Irrigation</h2>
 
         <div className="irrigation-grid">
-          {fields.map(f => (
+          {irrigationData.map(f => (
             <div key={f.id} className="irrigation-card">
 
               <h3>{f.name}</h3>
+              <p>Crop: {f.crop}</p>
+              <p>Soil: {f.soil}</p>
 
-              <p>Water Level: {f.water}%</p>
+              <p>Current: {f.progress}%</p>
+              <p>Target: {f.target}%</p>
 
+              {/* TARGET */}
               <input
                 type="range"
                 min="0"
                 max="100"
-                value={f.water}
-                onChange={(e) => changeWater(f.id, e.target.value)}
+                value={f.target}
+                onChange={(e) => setTarget(f.id, e.target.value)}
               />
 
+              {/* PROGRESS */}
+              <div className="progress-bar">
+                <div
+                  className="progress-fill"
+                  style={{ width: `${f.progress}%` }}
+                ></div>
+              </div>
+
+              {/* STATUS */}
+              <p>
+                {f.isIrrigating ? "🌊 Irrigating..." : "⏸ Stopped"}
+              </p>
+
+              {/* CONTROL */}
               <button
-                className={f.status ? "on" : "off"}
+                className={f.isIrrigating ? "on" : "off"}
                 onClick={() => toggle(f.id)}
               >
-                {f.status ? "Turn OFF" : "Turn ON"}
+                {f.isIrrigating ? "Stop" : "Start"}
               </button>
 
             </div>
           ))}
         </div>
 
-        {/* AI Suggestion */}
         <div className="ai-box">
-          💡 AI Suggestion: Reduce irrigation for Field B due to expected rainfall.
+          💡 AI Suggestion: Use drip irrigation for better efficiency.
         </div>
 
       </div>

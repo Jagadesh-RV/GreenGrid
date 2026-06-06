@@ -1,3 +1,8 @@
 import axios from "axios";
-export const getCrops = () =>
-  axios.get("http://localhost:5000/api/crop");
+
+const apiClient = axios.create({
+  baseURL: process.env.REACT_APP_API_BASE_URL || "",
+  headers: { "Content-Type": "application/json" },
+});
+
+export const getCrops = () => apiClient.get("/api/crop");

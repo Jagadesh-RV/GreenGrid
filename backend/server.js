@@ -16,6 +16,23 @@ const io = new Server(server, {
   cors: { origin: "*" }
 });
 
+app.get("/api/fields", (req, res) => {
+  res.json([
+    {
+      _id: "1",
+      name: "Field A",
+      water: 40,
+      status: false
+    },
+    {
+      _id: "2",
+      name: "Field B",
+      water: 70,
+      status: true
+    }
+  ]);
+});
+
 io.on("connection", (socket) => {
   console.log("User connected");
 
@@ -38,5 +55,3 @@ app.use("/api/auth", authRoutes);
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/crop", require("./routes/cropRoutes"));
 app.use("/api/market", require("./routes/marketRoutes"));
-
-app.listen(5000, ()=>console.log("Server running"));
