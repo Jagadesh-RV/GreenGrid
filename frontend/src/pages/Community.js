@@ -58,56 +58,60 @@ export default function Community() {
     setPosts(updated);
   };
 
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <div className="layout">
-      <Sidebar />
+    <div className="app-shell">
+      <Sidebar collapsed={collapsed} />
 
-      <div className="main">
-        <Navbar />
+      <div className={`page-main${collapsed ? " sidebar-collapsed" : ""}`}>
+        <Navbar onToggle={() => setCollapsed(c => !c)} sidebarCollapsed={collapsed} />
 
-        <h2>🌐 Farmer Community</h2>
+        <div className="page-content">
+          <h2>🌐 Farmer Community</h2>
 
-        {/* CREATE POST */}
-        <div className="post-box">
-          <textarea
-            placeholder="Share your update, sell crops, or ask..."
-            value={newPost}
-            onChange={(e) => setNewPost(e.target.value)}
-          />
+          {/* CREATE POST */}
+          <div className="post-box">
+            <textarea
+              placeholder="Share your update, sell crops, or ask..."
+              value={newPost}
+              onChange={(e) => setNewPost(e.target.value)}
+            />
 
-          <div className="post-controls">
-            <select value={type} onChange={(e) => setType(e.target.value)}>
-              <option value="general">General</option>
-              <option value="sell">Sell</option>
-              <option value="buy">Buy</option>
-            </select>
+            <div className="post-controls">
+              <select value={type} onChange={(e) => setType(e.target.value)}>
+                <option value="general">General</option>
+                <option value="sell">Sell</option>
+                <option value="buy">Buy</option>
+              </select>
 
-            <button onClick={addPost}>Post</button>
-          </div>
-        </div>
-
-        {/* FEED */}
-        <div className="feed">
-          {posts.map((p, i) => (
-            <div key={i} className={`post ${p.type}`}>
-
-              <div className="post-header">
-                <h4>{p.user}</h4>
-                <span>{p.time}</span>
-              </div>
-
-              <p>{p.content}</p>
-
-              <div className="actions">
-                <button onClick={() => likePost(i)}>
-                  👍 {p.likes || 0}
-                </button>
-                <button>💬 Comment</button>
-                <button>📩 Contact</button>
-              </div>
-
+              <button onClick={addPost}>Post</button>
             </div>
-          ))}
+          </div>
+
+          {/* FEED */}
+          <div className="feed">
+            {posts.map((p, i) => (
+              <div key={i} className={`post ${p.type}`}>
+
+                <div className="post-header">
+                  <h4>{p.user}</h4>
+                  <span>{p.time}</span>
+                </div>
+
+                <p>{p.content}</p>
+
+                <div className="actions">
+                  <button onClick={() => likePost(i)}>
+                    👍 {p.likes || 0}
+                  </button>
+                  <button>💬 Comment</button>
+                  <button>📩 Contact</button>
+                </div>
+
+              </div>
+            ))}
+          </div>
         </div>
 
       </div>

@@ -1,5 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 import { FieldContext } from "../context/FieldContext";
 import { getCrops } from "../api/cropApi";
 import "../styles/layout.css";
@@ -110,11 +111,15 @@ export default function CropManagement() {
     );
   };
 
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <div className="layout">
-      <Sidebar />
-      <div className="main">
-        <div className="page-head">
+    <div className="app-shell">
+      <Sidebar collapsed={collapsed} />
+      <div className={`page-main${collapsed ? " sidebar-collapsed" : ""}`}>
+        <Navbar onToggle={() => setCollapsed(c => !c)} sidebarCollapsed={collapsed} />
+        <div className="page-content">
+          <div className="page-head">
           <div>
             <h2>🌾 Crop Management</h2>
             <p className="subtitle">
@@ -249,5 +254,6 @@ export default function CropManagement() {
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }

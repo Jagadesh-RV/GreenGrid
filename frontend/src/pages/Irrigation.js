@@ -70,62 +70,66 @@ export default function Irrigation() {
     );
   };
 
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <div className="layout">
-      <Sidebar />
+    <div className="app-shell">
+      <Sidebar collapsed={collapsed} />
 
-      <div className="main">
-        <Navbar />
+      <div className={`page-main${collapsed ? " sidebar-collapsed" : ""}`}>
+        <Navbar onToggle={() => setCollapsed(c => !c)} sidebarCollapsed={collapsed} />
 
-        <h2>💧 Smart Irrigation</h2>
+        <div className="page-content">
+          <h2>💧 Smart Irrigation</h2>
 
-        <div className="irrigation-grid">
-          {irrigationData.map(f => (
-            <div key={f.id} className="irrigation-card">
+          <div className="irrigation-grid">
+            {irrigationData.map(f => (
+              <div key={f.id} className="irrigation-card">
 
-              <h3>{f.name}</h3>
-              <p>Crop: {f.crop}</p>
-              <p>Soil: {f.soil}</p>
+                <h3>{f.name}</h3>
+                <p>Crop: {f.crop}</p>
+                <p>Soil: {f.soil}</p>
 
-              <p>Current: {f.progress}%</p>
-              <p>Target: {f.target}%</p>
+                <p>Current: {f.progress}%</p>
+                <p>Target: {f.target}%</p>
 
-              {/* TARGET */}
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={f.target}
-                onChange={(e) => setTarget(f.id, e.target.value)}
-              />
+                {/* TARGET */}
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={f.target}
+                  onChange={(e) => setTarget(f.id, e.target.value)}
+                />
 
-              {/* PROGRESS */}
-              <div className="progress-bar">
-                <div
-                  className="progress-fill"
-                  style={{ width: `${f.progress}%` }}
-                ></div>
+                {/* PROGRESS */}
+                <div className="progress-bar">
+                  <div
+                    className="progress-fill"
+                    style={{ width: `${f.progress}%` }}
+                  ></div>
+                </div>
+
+                {/* STATUS */}
+                <p>
+                  {f.isIrrigating ? "🌊 Irrigating..." : "⏸ Stopped"}
+                </p>
+
+                {/* CONTROL */}
+                <button
+                  className={f.isIrrigating ? "on" : "off"}
+                  onClick={() => toggle(f.id)}
+                >
+                  {f.isIrrigating ? "Stop" : "Start"}
+                </button>
+
               </div>
+            ))}
+          </div>
 
-              {/* STATUS */}
-              <p>
-                {f.isIrrigating ? "🌊 Irrigating..." : "⏸ Stopped"}
-              </p>
-
-              {/* CONTROL */}
-              <button
-                className={f.isIrrigating ? "on" : "off"}
-                onClick={() => toggle(f.id)}
-              >
-                {f.isIrrigating ? "Stop" : "Start"}
-              </button>
-
-            </div>
-          ))}
-        </div>
-
-        <div className="ai-box">
-          💡 AI Suggestion: Use drip irrigation for better efficiency.
+          <div className="ai-box">
+            💡 AI Suggestion: Use drip irrigation for better efficiency.
+          </div>
         </div>
 
       </div>

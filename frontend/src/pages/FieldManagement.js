@@ -1,5 +1,6 @@
 import { useContext, useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 import { FieldContext } from "../context/FieldContext";
 import "../styles/layout.css";
 import "../styles/fieldManagement.css";
@@ -173,11 +174,15 @@ export default function FieldManagement() {
     return { totalAcres: totalAcres.toFixed(2), avgHealth, cropsUsed };
   }, [fields]);
 
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <div className="layout">
-      <Sidebar />
-      <div className="main">
-        {/* Header */}
+    <div className="app-shell">
+      <Sidebar collapsed={collapsed} />
+      <div className={`page-main${collapsed ? " sidebar-collapsed" : ""}`}>
+        <Navbar onToggle={() => setCollapsed(c => !c)} sidebarCollapsed={collapsed} />
+        <div className="page-content">
+          {/* Header */}
         <div className="page-head">
           <div>
             <h2>🗺️ Field Management</h2>
@@ -427,5 +432,6 @@ export default function FieldManagement() {
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }
